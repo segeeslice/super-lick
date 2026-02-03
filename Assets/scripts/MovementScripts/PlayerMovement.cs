@@ -9,8 +9,11 @@ public class PlayerMovement : MonoBehaviour
     public float airDrag = 0.0f;
     public float groundDrag = 10f;
     public float maxSpeed = 10f;
+    public float rotationSpeed = 10f;
     private Vector3 _moveDirection;
     public Transform orientation;
+    public Transform playerObj;
+    public Animator playerAnimator;
 
     float horizontalInput;
     float verticalInput;
@@ -18,14 +21,17 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerAnimator = playerObj.GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
     }
-
-    private void Update()
+    
+    // use FixedUpdate to prevent framerate-limited movement
+    private void FixedUpdate()
     {
         MovePlayer();
+        UpdateAnimation();
         rb.linearDamping = groundDrag;
         SpeedControl();
     }
@@ -40,9 +46,32 @@ public class PlayerMovement : MonoBehaviour
     {
         // calculate movement direction
         _moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        
-        Debug.Log(_moveDirection.x);
+
+        // rotate playerObj to face the direction of movement
+        if (_moveDirection.sqrMagnitude > 0.0001f)
+        {
+            Quaternion targetRotation =
+                Quaternion.LookRotation(_moveDirection.normalized, Vector3.up);
+
+            playerObj.rotation = Quaternion.Slerp(
+                playerObj.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
+        }
+
+        //Debug.Log(_moveDirection.x);
         rb.AddForce(_moveDirection.normalized * moveSpeed*10f, ForceMode.Force);
+    }
+
+    // update animation based on speed
+    private void UpdateAnimation()
+    {
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        float speed = flatVelocity.magnitude;
+        //Debug.Log(speed);
+
+        playerAnimator.SetFloat("MoveSpeed", speed);
     }
 
     private void SpeedControl()
@@ -56,7 +85,19 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
     }
-    
-    
-    
+
+    // added Lick here. We can move this to its own dedicated script if we want though
+    public void OnLick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            playerAnimator.SetBool("isLicking", true);
+        }
+        else if (context.canceled)
+        {
+            playerAnimator.SetBool("isLicking", false);
+        }
+        Debug.Log(context.phase);
+    }
+
 }
