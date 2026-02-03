@@ -109,6 +109,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b306891-8dd3-4e3c-8284-b45af4b1c282"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""0222e1a4-283e-4a7d-9e33-05343227e6f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Walk"",
+                    ""type"": ""Button"",
+                    ""id"": ""eaa949d7-8851-47ea-8acc-a99545b06312"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lick"",
+                    ""type"": ""Button"",
+                    ""id"": ""1949905f-7fbb-4323-80ce-454f8b8195a3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -221,6 +257,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad38b4eb-8c3d-41a7-9b81-e6718778b85e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f575402-d2fe-4a47-b4c1-07d34c0d4e46"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2864a85-c165-41bf-87f4-9f7b87333235"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0b5e09e-4de7-4257-9f37-a2aaf20311cb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -231,6 +311,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_Look = m_Movement.FindAction("Look", throwIfNotFound: true);
+        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_Crouch = m_Movement.FindAction("Crouch", throwIfNotFound: true);
+        m_Movement_Walk = m_Movement.FindAction("Walk", throwIfNotFound: true);
+        m_Movement_Lick = m_Movement.FindAction("Lick", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -313,6 +397,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_Look;
+    private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_Crouch;
+    private readonly InputAction m_Movement_Walk;
+    private readonly InputAction m_Movement_Lick;
     /// <summary>
     /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
@@ -332,6 +420,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Movement/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Movement_Look;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Jump".
+        /// </summary>
+        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Crouch".
+        /// </summary>
+        public InputAction @Crouch => m_Wrapper.m_Movement_Crouch;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Walk".
+        /// </summary>
+        public InputAction @Walk => m_Wrapper.m_Movement_Walk;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Lick".
+        /// </summary>
+        public InputAction @Lick => m_Wrapper.m_Movement_Lick;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -364,6 +468,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Walk.started += instance.OnWalk;
+            @Walk.performed += instance.OnWalk;
+            @Walk.canceled += instance.OnWalk;
+            @Lick.started += instance.OnLick;
+            @Lick.performed += instance.OnLick;
+            @Lick.canceled += instance.OnLick;
         }
 
         /// <summary>
@@ -381,6 +497,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Walk.started -= instance.OnWalk;
+            @Walk.performed -= instance.OnWalk;
+            @Walk.canceled -= instance.OnWalk;
+            @Lick.started -= instance.OnLick;
+            @Lick.performed -= instance.OnLick;
+            @Lick.canceled -= instance.OnLick;
         }
 
         /// <summary>
@@ -435,5 +563,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCrouch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Walk" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnWalk(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Lick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLick(InputAction.CallbackContext context);
     }
 }
