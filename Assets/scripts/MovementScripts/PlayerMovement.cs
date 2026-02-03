@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,16 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+    public CameraStyle currentStyle;
+    public CinemachineCamera exploreCamera;
+    public CinemachineCamera aimCamera;
+
+    public enum CameraStyle
+    {
+        Explore,
+        Aim
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
     }
-    
+
     // use FixedUpdate to prevent framerate-limited movement
     private void FixedUpdate()
     {
@@ -34,6 +45,24 @@ public class PlayerMovement : MonoBehaviour
         UpdateAnimation();
         rb.linearDamping = groundDrag;
         SpeedControl();
+        setCameraPriority();
+
+
+    }
+
+    private void setCameraPriority()
+    {
+        if (currentStyle == CameraStyle.Explore)
+        {
+            aimCamera.Priority = 0;
+            exploreCamera.Priority = 10;
+        }
+        else
+        {
+            
+            aimCamera.Priority = 10;
+            exploreCamera.Priority = 0;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -45,7 +74,8 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         // calculate movement direction
-        _moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            _moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        
 
         // rotate playerObj to face the direction of movement
         if (_moveDirection.sqrMagnitude > 0.0001f)
@@ -99,5 +129,17 @@ public class PlayerMovement : MonoBehaviour
         }
         Debug.Log(context.phase);
     }
+
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            currentStyle = CameraStyle.Aim;
+        }
+        else if (context.canceled)
+        {
+            currentStyle = CameraStyle.Explore;
+        }
+    } 
 
 }
