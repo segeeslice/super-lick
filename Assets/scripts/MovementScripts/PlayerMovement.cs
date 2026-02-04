@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 1f;
     public float airDrag = 0.0f;
     public float groundDrag = 10f;
+    public float angularDrag = 10f;
     public float maxSpeed = 10f;
     public float rotationSpeed = 10f;
     public Transform orientation;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.linearDamping = groundDrag;
+        rb.angularDamping = angularDrag;
 
         playerAnimator = playerObj.GetComponent<Animator>();
 
