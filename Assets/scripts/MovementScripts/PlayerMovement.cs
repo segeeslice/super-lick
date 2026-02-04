@@ -4,35 +4,38 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody rb;
     public float moveSpeed = 1f;
     public float airDrag = 0.0f;
     public float groundDrag = 10f;
+    public float angularDrag = 10f;
     public float maxSpeed = 10f;
     public float rotationSpeed = 10f;
-    private Vector3 _moveDirection;
     public Transform orientation;
     public Transform playerObj;
     public Animator playerAnimator;
 
-    float horizontalInput;
-    float verticalInput;
+    private Rigidbody rb;
+    private Vector3 _moveDirection;
+
+    private float horizontalInput;
+    private float verticalInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.linearDamping = groundDrag;
+        rb.angularDamping = angularDrag;
+
         playerAnimator = playerObj.GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
-
     }
-    
+
     // use FixedUpdate to prevent framerate-limited movement
     private void FixedUpdate()
     {
         MovePlayer();
         UpdateAnimation();
-        rb.linearDamping = groundDrag;
         SpeedControl();
     }
 
@@ -60,8 +63,7 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        //Debug.Log(_moveDirection.x);
-        rb.AddForce(_moveDirection.normalized * moveSpeed*10f, ForceMode.Force);
+        rb.AddForce(_moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
     // update animation based on speed
@@ -69,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         float speed = flatVelocity.magnitude;
-        //Debug.Log(speed);
 
         playerAnimator.SetFloat("MoveSpeed", speed);
     }
@@ -97,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimator.SetBool("isLicking", false);
         }
-        Debug.Log(context.phase);
     }
 
 }
