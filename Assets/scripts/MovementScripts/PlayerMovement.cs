@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 1f;
-    public float airDrag = 0.0f;
-    public float groundDrag = 10f;
-    public float angularDrag = 10f;
+    public float airDrag = 0.0f; // TODO: need to implement this still
+    public float groundDrag = 5f;
     public float maxSpeed = 10f;
     public float rotationSpeed = 10f;
+    public float jumpForce = 7f;
     public Transform orientation;
     public Transform playerObj;
     public Animator playerAnimator;
@@ -17,14 +17,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 _moveDirection;
 
+    private bool grounded;
+
     private float horizontalInput;
     private float verticalInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.linearDamping = groundDrag;
-        rb.angularDamping = angularDrag;
 
         playerAnimator = playerObj.GetComponent<Animator>();
 
@@ -34,9 +34,19 @@ public class PlayerMovement : MonoBehaviour
     // use FixedUpdate to prevent framerate-limited movement
     private void FixedUpdate()
     {
+        CheckGround();
         MovePlayer();
-        UpdateAnimation();
         SpeedControl();
+        ApplyGroundDrag();
+        UpdateAnimation();
+    }
+
+    private void CheckGround()
+    {
+        // TODO: this raycast needs fine tuning
+        grounded = Physics.Raycast(orientation.position, Vector3.down, 1.5f);
+        playerAnimator.SetBool("isGrounded", grounded);
+        playerAnimator.SetBool("isJumping", false); // maybe not the best place for this but oh well
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -87,17 +97,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // added Lick here. We can move this to its own dedicated script if we want though
-    public void OnLick(InputAction.CallbackContext context)
+    private void ApplyGroundDrag()
     {
-        if (context.started)
-        {
-            playerAnimator.SetBool("isLicking", true);
-        }
-        else if (context.canceled)
-        {
-            playerAnimator.SetBool("isLicking", false);
-        }
+        if (!grounded) return;
+
+        Vector3 vel = rb.linearVelocity;
+
+        Vector3 horizontal = new Vector3(vel.x, 0f, vel.z);
+
+        horizontal = Vector3.Lerp(
+            horizontal,
+            Vector3.zero,
+            groundDrag * Time.fixedDeltaTime
+        );
+
+        rb.linearVelocity = new Vector3(
+            horizontal.x,
+            vel.y,
+            horizontal.z
+        );
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (!grounded) return;
+
+        Vector3 vel = rb.linearVelocity;
+
+        playerAnimator.SetBool("isJumping", true);
+
+        // Reset downward velocity so jumps are consistent
+        vel.y = 0f;
+        vel.y = jumpForce;
+
+        rb.linearVelocity = vel;
+
+        grounded = false;
     }
 
 }
