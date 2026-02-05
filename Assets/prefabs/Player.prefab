@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 952883106595562825}
   m_Layer: 2
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172737771207720785}
   serializedVersion: 2
-  m_LocalRotation: {x: 2.2353671e-11, y: -0.000991553, z: 3.1263878e-13, w: 0.9999995}
+  m_LocalRotation: {x: 0, y: -0.0009948779, z: 0, w: 0.9999995}
   m_LocalPosition: {x: 1.0504605, y: 1.0000006, z: -6.3563347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 1193675548717598176}
   - {fileID: 8102566556822703217}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.114, z: 0}
 --- !u!114 &4311355004779542740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 3204446473669536237}
   m_Layer: 2
   m_Name: froggie
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
