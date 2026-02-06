@@ -200,7 +200,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 60.000004
     OrthographicSize: 10
-    NearClipPlane: 0.1
+    NearClipPlane: 1.07
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 3
   HorizontalAxis:
-    Value: -133.42876
+    Value: -120.715546
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -261,9 +261,9 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 13.191126
-    Center: 17.5
-    Range: {x: -15, y: 45}
+    Value: 70
+    Center: 70
+    Range: {x: 70, y: 70}
     Wrap: 0
     Recentering:
       Enabled: 0

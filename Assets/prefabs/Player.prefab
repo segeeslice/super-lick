@@ -155,9 +155,9 @@ MonoBehaviour:
   moveSpeed: 10
   airDrag: 0
   groundDrag: 5
-  maxSpeed: 10
+  maxSpeed: 30
   rotationSpeed: 20
-  jumpForce: 7
+  jumpForce: 15
   orientation: {fileID: 1193675548717598176}
   playerObj: {fileID: 8102566556822703217}
   playerAnimator: {fileID: 8014161196810769168}
@@ -207,7 +207,7 @@ MonoBehaviour:
   tonguePosition: {fileID: 3741409211113344892}
   camera: {fileID: 0}
   player: {fileID: 4397329586919040269}
-  maxDistance: 15
+  maxDistance: 45
 --- !u!120 &952883106595562825
 LineRenderer:
   serializedVersion: 2
