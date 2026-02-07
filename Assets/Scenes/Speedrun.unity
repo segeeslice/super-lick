@@ -1400,6 +1400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIUpdater
   bugCounterField: {fileID: 2013202522}
+  timer: {fileID: 0}
   bugCount: 0
 --- !u!1 &803859577
 GameObject:
