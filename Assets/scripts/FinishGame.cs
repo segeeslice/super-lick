@@ -15,8 +15,9 @@ public class FinishGame : MonoBehaviour
 {
     public Transform spawnPoint;
     public GameObject player;
-    public List<GameObject> bugs;
+    private List<GameObject> bugs;
     public int respawnDelayMs = 3000;
+    public InitBugSpawns initBugSpawns;
 
     protected List<Renderer> bugRenderers;
     protected bool respawning;
@@ -26,16 +27,9 @@ public class FinishGame : MonoBehaviour
     {
         bugRenderers = new List<Renderer>();
         respawning = false;
+        bugs = initBugSpawns.GetBugs();
 
-        foreach (GameObject bug in bugs)
-        {
-            Renderer objectRenderer = bug.GetComponentInChildren<Renderer>();
-            if (objectRenderer is null)
-            {
-                throw new Exception("Received bug without object renderer");
-            }
-            bugRenderers.Add(objectRenderer);
-        }
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -50,24 +44,32 @@ public class FinishGame : MonoBehaviour
             return;
         }
 
-        bool allBugsGathered = bugRenderers.All(r => !r.enabled);
-        if (allBugsGathered)
+        Debug.Log(bugs);
+
+        bugs.RemoveAll(bug => bug == null);     
+
+
+        
+        
+        if (bugs.Count == 0)
         {
             Debug.Log("Winner winner!");
-        }
-        else
+            respawning = true;
+            DelayedReset();
+        }else
         {
-            Debug.Log("You missed one, idiot!");
+            Debug.Log("You missed some, idiot!");
+            respawning = true;
+            DelayedReset();
         }
 
-        respawning = true;
-        DelayedReset();
     }
 
     async void DelayedReset()
     {
         await Task.Delay(respawnDelayMs);
-        bugRenderers.ForEach(r => r.enabled = true);
+        initBugSpawns.DestroyAllBugs();
+        initBugSpawns.SpawnBugs();
         player.transform.position = spawnPoint.position;
         respawning = false;
     }

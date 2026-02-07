@@ -207,7 +207,7 @@ MonoBehaviour:
   tonguePosition: {fileID: 3741409211113344892}
   camera: {fileID: 0}
   player: {fileID: 4397329586919040269}
-  maxDistance: 30
+  maxDistance: 45
 --- !u!120 &952883106595562825
 LineRenderer:
   serializedVersion: 2
