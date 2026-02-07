@@ -24,12 +24,12 @@ public class CollectBug : MonoBehaviour
         // Player collected this! Shoop away
         if (other.CompareTag("Player"))
         {
-            MakeInvisible();
+            DestroySelf();
         }
     }
 
-    void MakeInvisible()
+    void DestroySelf()
     {
-        objectRenderer.enabled = false; // Disable the renderer
+        Destroy(gameObject); // Disable the renderer
     }
 }

@@ -11,10 +11,12 @@ public class TongueGrapple : MonoBehaviour
     public Transform tonguePosition, camera, player;
     public float maxDistance = 10f;
     private SpringJoint joint;
+    private Rigidbody rb;
 
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void LateUpdate()
@@ -50,11 +52,13 @@ public class TongueGrapple : MonoBehaviour
 
             float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
             joint.maxDistance = distanceFromPoint * 0.0f;
-            joint.minDistance = distanceFromPoint * 0.0f;
+            joint.minDistance = 4f;
 
             joint.spring = 12f;
             joint.damper = 7f;
             joint.massScale = 4.5f;
+
+            rb.AddForce(Vector3.down, ForceMode.Impulse);
         }
         else
         {
