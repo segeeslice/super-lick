@@ -157,7 +157,7 @@ MonoBehaviour:
   groundDrag: 5
   maxSpeed: 10
   rotationSpeed: 20
-  jumpForce: 7
+  jumpForce: 15
   orientation: {fileID: 1193675548717598176}
   playerObj: {fileID: 8102566556822703217}
   playerAnimator: {fileID: 8014161196810769168}
@@ -187,7 +187,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &783564576111623677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
   tonguePosition: {fileID: 3741409211113344892}
   camera: {fileID: 0}
   player: {fileID: 4397329586919040269}
-  maxDistance: 15
+  maxDistance: 30
 --- !u!120 &952883106595562825
 LineRenderer:
   serializedVersion: 2

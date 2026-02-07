@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDirection;
 
     private bool grounded;
+    private bool canJump = true;
 
     private float horizontalInput;
     private float verticalInput;
@@ -44,15 +46,31 @@ public class PlayerMovement : MonoBehaviour
     private void CheckGround()
     {
         // TODO: this raycast needs fine tuning
-        grounded = Physics.Raycast(orientation.position, Vector3.down, 1.5f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, 1.5f);
         playerAnimator.SetBool("isGrounded", grounded);
-        playerAnimator.SetBool("isJumping", false); // maybe not the best place for this but oh well
+        if (grounded)
+        {
+            playerAnimator.SetBool("isJumping", false);
+        }
+        // maybe not the best place for this but oh well
     }
+
+    
 
     public void OnMove(InputAction.CallbackContext context)
     {
         verticalInput = context.ReadValue<Vector2>().y;
         horizontalInput = context.ReadValue<Vector2>().x;
+
+        if (context.started)
+        {
+            playerAnimator.SetBool("isRunning", true);
+        }
+        if (context.canceled)
+        {
+            playerAnimator.SetBool("isRunning", false);
+        }
+        
     }
 
     private void MovePlayer()
@@ -83,6 +101,10 @@ public class PlayerMovement : MonoBehaviour
         float speed = flatVelocity.magnitude;
 
         playerAnimator.SetFloat("MoveSpeed", speed);
+
+        
+
+        
     }
 
     private void SpeedControl()
@@ -120,8 +142,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!grounded) return;
 
+        if (!grounded) return;
         Vector3 vel = rb.linearVelocity;
 
         playerAnimator.SetBool("isJumping", true);
@@ -130,9 +152,14 @@ public class PlayerMovement : MonoBehaviour
         vel.y = 0f;
         vel.y = jumpForce;
 
-        rb.linearVelocity = vel;
+        rb.AddForce(vel, ForceMode.Impulse);
 
         grounded = false;
+    }
+
+    private void resetJump()
+    {
+        canJump = true;
     }
 
 }
