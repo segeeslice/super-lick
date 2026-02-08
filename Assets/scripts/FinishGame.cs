@@ -10,14 +10,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class FinishGame : MonoBehaviour
 {
     public Transform spawnPoint;
     public GameObject player;
+    public Button resetButton;
     private List<GameObject> bugs;
     public int respawnDelayMs = 3000;
     public InitBugSpawns initBugSpawns;
+    public UIUpdater uiUpdater;
 
     protected List<Renderer> bugRenderers;
     protected bool respawning;
@@ -28,7 +32,10 @@ public class FinishGame : MonoBehaviour
         bugRenderers = new List<Renderer>();
         respawning = false;
         bugs = initBugSpawns.GetBugs();
-
+        resetButton.gameObject.SetActive(false);
+        uiUpdater.bugCount = 3;
+        
+        Cursor.lockState = CursorLockMode.Locked;
         
     }
 
@@ -46,31 +53,39 @@ public class FinishGame : MonoBehaviour
 
         Debug.Log(bugs);
 
-        bugs.RemoveAll(bug => bug == null);     
+        bugs.RemoveAll(bug => bug == null);
 
 
-        
-        
+
+
         if (bugs.Count == 0)
         {
             Debug.Log("Winner winner!");
-            respawning = true;
-            DelayedReset();
-        }else
+            
+            uiUpdater.StopTimer();
+
+            Cursor.lockState = CursorLockMode.None;
+            resetButton.gameObject.SetActive(true);
+        }
+        else
         {
-            Debug.Log("You missed some, idiot!");
-            respawning = true;
-            DelayedReset();
+            
         }
 
     }
+    
+    
 
-    async void DelayedReset()
+    public void Reset()
     {
-        await Task.Delay(respawnDelayMs);
+        
+        uiUpdater.bugCount = 3;
+        resetButton.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
         initBugSpawns.DestroyAllBugs();
         initBugSpawns.SpawnBugs();
         player.transform.position = spawnPoint.position;
         respawning = false;
+        uiUpdater.StartTimer();
     }
 }

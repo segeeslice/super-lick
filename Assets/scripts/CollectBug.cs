@@ -8,6 +8,7 @@ using UnityEngine;
 public class CollectBug : MonoBehaviour
 {
     Renderer objectRenderer;
+    public UIUpdater uiUpdater;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +25,7 @@ public class CollectBug : MonoBehaviour
         // Player collected this! Shoop away
         if (other.CompareTag("Player"))
         {
+            uiUpdater.bugCount--;
             DestroySelf();
         }
     }

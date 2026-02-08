@@ -7485,7 +7485,6 @@ MonoBehaviour:
   - {fileID: 179633889}
   bugs: []
   bugPrefab: {fileID: 2986802578638000834, guid: cb3bc1f16c3be077192a3b14948c8c1f, type: 3}
-  uiUpdater: {fileID: 648783163}
 --- !u!114 &648783163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7500,7 +7499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIUpdater
   bugCounterField: {fileID: 2013202522}
   timer: {fileID: 1715594055}
-  resetButton: {fileID: 1087307023}
+  resetButton: {fileID: 0}
   bugCount: 0
 --- !u!1001 &651036566
 PrefabInstance:
@@ -12629,7 +12628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a09141b2a3009cc4c9d8a901a6704060, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.72
+      value: 26.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a09141b2a3009cc4c9d8a901a6704060, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12637,7 +12636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a09141b2a3009cc4c9d8a901a6704060, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.85
+      value: 5.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a09141b2a3009cc4c9d8a901a6704060, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18416,7 +18415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efa943b56c4ddb1489980e22cd497e09, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.72
+      value: 26.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efa943b56c4ddb1489980e22cd497e09, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18424,7 +18423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efa943b56c4ddb1489980e22cd497e09, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.85
+      value: 5.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efa943b56c4ddb1489980e22cd497e09, type: 3}
       propertyPath: m_LocalRotation.w
