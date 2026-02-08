@@ -39,6 +39,8 @@ public class FinishGame : MonoBehaviour
         
     }
 
+    
+
     void OnTriggerEnter(Collider other)
     {
         if (respawning)
@@ -73,12 +75,12 @@ public class FinishGame : MonoBehaviour
         }
 
     }
-    
-    
+
+
 
     public void Reset()
     {
-        
+
         uiUpdater.bugCount = 3;
         resetButton.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -87,5 +89,11 @@ public class FinishGame : MonoBehaviour
         player.transform.position = spawnPoint.position;
         respawning = false;
         uiUpdater.StartTimer();
+    }
+    
+    public void Quit()
+    {
+
+        Application.Quit();
     }
 }
