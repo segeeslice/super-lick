@@ -8,6 +8,7 @@ public class InitBugSpawns : MonoBehaviour
     public GameObject[] spawnPoints;
     public List<GameObject> bugs;
     public GameObject bugPrefab;
+    public UIUpdater uiUpdater;
 
     void Start()
     {
@@ -20,8 +21,8 @@ public class InitBugSpawns : MonoBehaviour
         foreach (GameObject spawnPoint in spawnPoints)
         {
             GameObject bug = Instantiate(bugPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            bug.gameObject.GetComponent<CollectBug>().uiUpdater = uiUpdater;
             bugs.Add(bug);
-
         }
     }
     

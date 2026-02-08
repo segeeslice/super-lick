@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
         playerAnimator = playerObj.GetComponent<Animator>();
 
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // use FixedUpdate to prevent framerate-limited movement

@@ -7501,6 +7501,7 @@ MonoBehaviour:
   bugCounterField: {fileID: 2013202522}
   timer: {fileID: 1715594055}
   resetButton: {fileID: 1087307023}
+  maxBug: 0
   bugCount: 0
 --- !u!1001 &651036566
 PrefabInstance:
