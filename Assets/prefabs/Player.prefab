@@ -139,6 +139,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9fe51040-6fd7-4036-94af-3d4add67f04e
     m_ActionName: 'Movement/Reset[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e974891b-7726-4f8f-a9bd-f2cc761a5a72
+    m_ActionName: 'Movement/Quit[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
@@ -238,7 +242,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 5dfa42303f98f4342bdf1100a3ae4a22, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1054,7 +1058,7 @@ Transform:
   m_GameObject: {fileID: 7038682695672747665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.811, z: 0.2368}
+  m_LocalPosition: {x: -0, y: 0.699, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
