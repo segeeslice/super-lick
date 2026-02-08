@@ -135,6 +135,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1949905f-7fbb-4323-80ce-454f8b8195a3
     m_ActionName: 'Movement/Lick[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9fe51040-6fd7-4036-94af-3d4add67f04e
+    m_ActionName: 'Movement/Reset[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
