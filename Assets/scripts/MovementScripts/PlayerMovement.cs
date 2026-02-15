@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
     public Transform playerObj;
     public Animator playerAnimator;
+    public PlayerAudio playerAudio;
 
     private Rigidbody rb;
     private Vector3 _moveDirection;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         playerAnimator = playerObj.GetComponent<Animator>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
 
     }
 
@@ -145,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 vel = rb.linearVelocity;
 
         playerAnimator.SetBool("isJumping", true);
+        playerAudio.PlayJumpSound();
 
         // Reset downward velocity so jumps are consistent
         vel.y = 0f;

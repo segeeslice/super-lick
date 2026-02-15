@@ -12,11 +12,13 @@ public class TongueGrapple : MonoBehaviour
     public float maxDistance = 10f;
     private SpringJoint joint;
     private Rigidbody rb;
+    public PlayerAudio playerAudio;
 
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
     }
 
     void LateUpdate()
@@ -31,6 +33,7 @@ public class TongueGrapple : MonoBehaviour
         {
             playerAnimator.SetBool("isLicking", true);
             StartGrapple();
+            playerAudio.PlayLickSound();
         }
         else if (context.canceled)
         {

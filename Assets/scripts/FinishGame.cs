@@ -62,6 +62,14 @@ public class FinishGame : MonoBehaviour
 
         if (bugs.Count == 0)
         {
+            // get ref to the playerAudio on the player
+            PlayerAudio playerAudio = other.GetComponentInChildren<PlayerAudio>();
+
+            if (playerAudio != null)
+            {
+                playerAudio.PlayWinSound();
+            }
+
             Debug.Log("Winner winner!");
             
             uiUpdater.StopTimer();
