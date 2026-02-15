@@ -25,6 +25,14 @@ public class CollectBug : MonoBehaviour
         // Player collected this! Shoop away
         if (other.CompareTag("Player"))
         {
+            // get ref to the playerAudio on the player
+            PlayerAudio playerAudio = other.GetComponentInChildren<PlayerAudio>();
+
+            if (playerAudio != null)
+            {
+                playerAudio.PlayPickupSound();
+            }
+
             uiUpdater.bugCount--;
             DestroySelf();
         }
